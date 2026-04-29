@@ -1,0 +1,57 @@
+# Build directories
+build/
+build_*/
+out/
+.vs/
+.vscode/
+CMakeSettings.json
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiler outputs
+*.o
+*.obj
+*.ll
+*.s
+*.asm
+*.app
+*.exe
+*.out
+*.a
+*.so
+*.dll
+*.dylib
+
+# Generated parser/scanner files outside build directories
+parser.cpp
+parser.hpp
+lexer.cpp
+
+# Temporary and cache files
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+tmp_render/
+render_variant5/
+*.tmp
+*.log
+
+# Microsoft Office temporary lock files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Obsolete/intermediate course artifacts
+diagram_grammar_variant_11.png
+diagram_grammar_variant_5.png
+Отчёт_мини_компилятор_вариант_11*.docx
+Отчёт_мини_компилятор_вариант_5.docx
+Инструкция_скриншоты.md
