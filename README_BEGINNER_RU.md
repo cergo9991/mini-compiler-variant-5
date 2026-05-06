@@ -810,3 +810,153 @@ LLVM IR нужен как промежуточный язык между AST и 
 - это удобный мост между учебным языком и MIPS;
 - он делает архитектуру компилятора чище;
 - он позволяет не смешивать синтаксис языка с деталями целевой платформы.
+
+## 19. Пять маленьких экспериментов, чтобы руками увидеть работу компилятора
+
+Ниже пять коротких изменений по возрастанию сложности. Идея простая: вы меняете одну строку, запускаете несколько команд и сразу видите, что изменилось в поведении программы или в диагностике компилятора.
+
+### Эксперимент 1. Изменить входной аргумент
+
+Файл: `runtime/main.c`
+
+Замените:
+
+```c
+int64_t result = compiled_fn(10);
+```
+
+на:
+
+```c
+int64_t result = compiled_fn(5);
+```
+
+Запустите:
+
+```bash
+mipsel-linux-gnu-gcc runtime/main.c build/05_do_while_sum.o -o build/05_do_while_sum.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
+```
+
+Ожидаемый результат:
+
+```text
+10
+```
+
+Почему так: функция теперь считает сумму чисел от `0` до `4`.
+
+### Эксперимент 2. Изменить условие цикла
+
+Файл: `tests/05_do_while_sum.mc`
+
+Замените:
+
+```c
+} while (i < arg);
+```
+
+на:
+
+```c
+} while (i <= arg);
+```
+
+Запустите:
+
+```bash
+./build/mini_cc tests/05_do_while_sum.mc -o build/05_do_while_sum.o --emit-ir build/05_do_while_sum.ll
+mipsel-linux-gnu-gcc runtime/main.c build/05_do_while_sum.o -o build/05_do_while_sum.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
+```
+
+Если в `runtime/main.c` осталось `compiled_fn(10)`, ожидаемый результат:
+
+```text
+55
+```
+
+Почему так: цикл теперь включает и число `10`.
+
+### Эксперимент 3. Изменить шаг цикла
+
+Файл: `tests/05_do_while_sum.mc`
+
+Замените:
+
+```c
+i = i + 1;
+```
+
+на:
+
+```c
+i = i + 2;
+```
+
+Запустите те же три команды, что и в эксперименте 2.
+
+Если условие снова `i < arg`, а в `runtime/main.c` стоит `10`, ожидаемый результат:
+
+```text
+20
+```
+
+Почему так: суммируются только `0 + 2 + 4 + 6 + 8`.
+
+### Эксперимент 4. Заменить всю логику функции на простую формулу
+
+Файл: `tests/05_do_while_sum.mc`
+
+Сделайте файл таким:
+
+```c
+int compiled_fn(int arg) {
+    return arg * 3;
+}
+```
+
+Запустите:
+
+```bash
+./build/mini_cc tests/05_do_while_sum.mc -o build/05_do_while_sum.o --emit-ir build/05_do_while_sum.ll
+mipsel-linux-gnu-gcc runtime/main.c build/05_do_while_sum.o -o build/05_do_while_sum.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
+```
+
+При `compiled_fn(10)` ожидаемый результат:
+
+```text
+30
+```
+
+Почему так: вы убрали цикл и заменили его обычным выражением.
+
+### Эксперимент 5. Специально вызвать semantic error
+
+Файл: `tests/05_do_while_sum.mc`
+
+Замените:
+
+```c
+sum = sum + i;
+```
+
+на:
+
+```c
+sum = missing + i;
+```
+
+Запустите только компиляцию:
+
+```bash
+./build/mini_cc tests/05_do_while_sum.mc -o build/05_do_while_sum.o --emit-ir build/05_do_while_sum.ll
+```
+
+Ожидаемый результат: объектный файл не соберется, а компилятор напечатает ошибку про необъявленную переменную `missing`.
+
+Это хороший эксперимент, потому что он показывает разницу между:
+
+- корректной программой, которая доходит до LLVM IR и объектного файла;
+- и программой, которую останавливает семантический анализ.
