@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/mini_cc.dir/src/ast.cpp.o CMakeFiles/mini_cc.dir/src/sema.cpp.o CMakeFiles/mini_cc.dir/src/codegen.cpp.o CMakeFiles/mini_cc.dir/src/driver.cpp.o CMakeFiles/mini_cc.dir/parser.cpp.o CMakeFiles/mini_cc.dir/lexer.cpp.o -o mini_cc  -lLLVM-14 

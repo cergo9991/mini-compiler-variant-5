@@ -97,6 +97,102 @@ qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
 
 `runtime/main.c` вызывает `compiled_fn(10)`, поэтому тест `05_do_while_sum.mc` возвращает сумму чисел от `0` до `9`.
 
+## Как работает компилятор на примере Quick Start
+
+Ниже разобран не отдельный `.sh`-скрипт, а та же последовательность команд из `Quick Start`. Это самый короткий путь понять, как проект работает от исходного `.mc` файла до вывода результата в терминал.
+
+### Пошагово по командам
+
+1. `cmake -S . -B build`
+
+   CMake читает `CMakeLists.txt`, находит `flex`, `bison` и `LLVM 14`, а затем подготавливает сборку компилятора `mini_cc`.
+
+   На этом этапе:
+
+   - из `src/parser.y` будет сгенерирован `build/parser.cpp`;
+   - из `src/lexer.l` будет сгенерирован `build/lexer.cpp`;
+   - для компилятора будут подключены MIPS-компоненты LLVM, потому что проект генерирует объектный файл под `mipsel-unknown-linux-gnu`.
+
+2. `cmake --build build -j`
+
+   Эта команда собирает сам компилятор `build/mini_cc`.
+
+   Внутри участвуют файлы:
+
+   - `src/ast.cpp`
+   - `src/sema.cpp`
+   - `src/codegen.cpp`
+   - `src/driver.cpp`
+   - сгенерированные `build/parser.cpp`
+   - сгенерированные `build/lexer.cpp`
+
+   Важно: на этом шаге ещё не компилируется `tests/05_do_while_sum.mc`. Здесь собирается только сам исполняемый файл компилятора.
+
+3. `./build/mini_cc tests/05_do_while_sum.mc -o build/05_do_while_sum.o --emit-ir build/05_do_while_sum.ll`
+
+   Теперь запускается уже собранный компилятор.
+
+   Его точка входа находится в `src/driver.cpp`. Дальше происходит конвейер:
+
+   - `driver.cpp` разбирает аргументы командной строки;
+   - `src/lexer.l` читает текст `tests/05_do_while_sum.mc` и превращает его в токены;
+   - `src/parser.y` строит AST;
+   - `src/sema.cpp` проверяет типы, области видимости и сигнатуру `compiled_fn`;
+   - `src/codegen.cpp` генерирует LLVM IR и объектный файл.
+
+   На выходе появляются два артефакта:
+
+   - `build/05_do_while_sum.ll` - LLVM IR;
+   - `build/05_do_while_sum.o` - MIPS object file.
+
+4. `mipsel-linux-gnu-gcc runtime/main.c build/05_do_while_sum.o -o build/05_do_while_sum.mips`
+
+   Здесь `mini_cc` уже не участвует. Работает обычный MIPS cross-compiler.
+
+   Он берёт:
+
+   - `runtime/main.c` как обычную C-программу с функцией `main()`;
+   - `build/05_do_while_sum.o` как реализацию функции `compiled_fn`.
+
+   Результат - исполняемый файл `build/05_do_while_sum.mips`.
+
+5. `qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips`
+
+   `qemu-mipsel` эмулирует MIPS-процессор и запускает итоговый бинарник.
+
+   Во время запуска:
+
+   - `runtime/main.c` вызывает `compiled_fn(10)`;
+   - логика из `tests/05_do_while_sum.mc` считает сумму чисел от `0` до `9`;
+   - `printf` из `runtime/main.c` печатает результат.
+
+   Поэтому итоговый вывод:
+
+   ```text
+   45
+   ```
+
+### Какие файлы что делают
+
+Ниже тот же пример в формате `файл -> что получает -> что отдаёт`.
+
+- `tests/05_do_while_sum.mc` -> получает: исходный код учебной программы -> отдаёт: текст для чтения компилятором
+- `src/driver.cpp` -> получает: аргументы CLI и путь к `.mc` -> отдаёт: запуск конвейера `lexer -> parser -> sema -> codegen`
+- `src/lexer.l` -> получает: сырой текст программы -> отдаёт: токены, например `int`, `compiled_fn`, `do`, `while`, числа и операторы
+- `src/parser.y` -> получает: токены от лексера -> отдаёт: AST, то есть дерево программы в памяти
+- `src/ast.hpp` -> получает: ничего во время запуска не читает, а задаёт структуру AST -> отдаёт: описания узлов `Program`, `FunctionDecl`, `DoWhileStmt`, `ReturnStmt` и других
+- `src/ast.cpp` -> получает: значения `TypeKind` -> отдаёт: строковые имена типов для диагностик, например `int` и `bool`
+- `src/sema.cpp` -> получает: AST -> отдаёт: либо список semantic errors, либо корректный AST с выведенными типами
+- `src/codegen.cpp` -> получает: корректный AST после semantic analysis -> отдаёт: `build/05_do_while_sum.ll` и `build/05_do_while_sum.o`
+- `runtime/main.c` -> получает: результат линковки с функцией `compiled_fn` -> отдаёт: точку входа `main()` и печать результата
+- `build/05_do_while_sum.o` -> получает: машинный код MIPS от LLVM -> отдаёт: объектный файл для линковки
+- `build/05_do_while_sum.mips` -> получает: `runtime/main.c` и `build/05_do_while_sum.o` через `mipsel-linux-gnu-gcc` -> отдаёт: готовый исполняемый MIPS-бинарник
+- `qemu-mipsel` -> получает: `build/05_do_while_sum.mips` -> отдаёт: реальный запуск программы и вывод `45`
+
+### Коротко в одну строку
+
+`.mc` -> `lexer` -> `parser` -> `AST` -> `sema` -> `LLVM IR` -> `MIPS .o` -> `runtime + linker` -> `MIPS executable` -> `QEMU` -> `45`
+
 ## Сборка
 
 Ручной способ:
