@@ -960,3 +960,138 @@ sum = missing + i;
 
 - корректной программой, которая доходит до LLVM IR и объектного файла;
 - и программой, которую останавливает семантический анализ.
+
+## 20. Готовые команды для запуска каждого теста по отдельности
+
+Ниже собраны готовые команды для каждого теста из папки `tests/`.
+
+Для положительных тестов схема одна и та же:
+
+1. скомпилировать `.mc` в `.o` и `.ll`;
+2. слинковать `runtime/main.c` с объектным файлом;
+3. запустить результат через `qemu-mipsel`.
+
+Для отрицательных тестов схема другая:
+
+1. запустить только компиляцию;
+2. убедиться, что компилятор завершился с `semantic error`.
+
+Важно:
+
+- команды ниже предполагают, что `build/mini_cc` уже собран;
+- `runtime/main.c` вызывает `compiled_fn(10)`, поэтому итоговый вывод зависит именно от аргумента `10`;
+- тесты `08` и `09` специально содержат ошибки, их не нужно линковать и запускать через `qemu`.
+
+### Тест 01. `01_return_literal.mc`
+
+```bash
+./build/mini_cc tests/01_return_literal.mc -o build/01_return_literal.o --emit-ir build/01_return_literal.ll
+mipsel-linux-gnu-gcc runtime/main.c build/01_return_literal.o -o build/01_return_literal.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/01_return_literal.mips
+```
+
+### Тест 02. `02_arithmetic.mc`
+
+```bash
+./build/mini_cc tests/02_arithmetic.mc -o build/02_arithmetic.o --emit-ir build/02_arithmetic.ll
+mipsel-linux-gnu-gcc runtime/main.c build/02_arithmetic.o -o build/02_arithmetic.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/02_arithmetic.mips
+```
+
+### Тест 03. `03_if_else.mc`
+
+```bash
+./build/mini_cc tests/03_if_else.mc -o build/03_if_else.o --emit-ir build/03_if_else.ll
+mipsel-linux-gnu-gcc runtime/main.c build/03_if_else.o -o build/03_if_else.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/03_if_else.mips
+```
+
+### Тест 04. `04_for.mc`
+
+```bash
+./build/mini_cc tests/04_for.mc -o build/04_for.o --emit-ir build/04_for.ll
+mipsel-linux-gnu-gcc runtime/main.c build/04_for.o -o build/04_for.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/04_for.mips
+```
+
+### Тест 05. `05_do_while_sum.mc`
+
+```bash
+./build/mini_cc tests/05_do_while_sum.mc -o build/05_do_while_sum.o --emit-ir build/05_do_while_sum.ll
+mipsel-linux-gnu-gcc runtime/main.c build/05_do_while_sum.o -o build/05_do_while_sum.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
+```
+
+Ожидаемый вывод:
+
+```text
+45
+```
+
+### Тест 06. `06_do_while_at_least_once.mc`
+
+```bash
+./build/mini_cc tests/06_do_while_at_least_once.mc -o build/06_do_while_at_least_once.o --emit-ir build/06_do_while_at_least_once.ll
+mipsel-linux-gnu-gcc runtime/main.c build/06_do_while_at_least_once.o -o build/06_do_while_at_least_once.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/06_do_while_at_least_once.mips
+```
+
+### Тест 07. `07_do_while_power.mc`
+
+```bash
+./build/mini_cc tests/07_do_while_power.mc -o build/07_do_while_power.o --emit-ir build/07_do_while_power.ll
+mipsel-linux-gnu-gcc runtime/main.c build/07_do_while_power.o -o build/07_do_while_power.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/07_do_while_power.mips
+```
+
+### Тест 08. `08_type_error.mc`
+
+```bash
+./build/mini_cc tests/08_type_error.mc -o build/08_type_error.o
+```
+
+Ожидаемое поведение:
+
+- объектный файл не должен быть выпущен;
+- компилятор должен напечатать `semantic error`.
+
+### Тест 09. `09_undeclared_variable.mc`
+
+```bash
+./build/mini_cc tests/09_undeclared_variable.mc -o build/09_undeclared_variable.o
+```
+
+Ожидаемое поведение:
+
+- объектный файл не должен быть выпущен;
+- компилятор должен напечатать `semantic error`.
+
+### Тест 10. `10_short_circuit.mc`
+
+```bash
+./build/mini_cc tests/10_short_circuit.mc -o build/10_short_circuit.o --emit-ir build/10_short_circuit.ll
+mipsel-linux-gnu-gcc runtime/main.c build/10_short_circuit.o -o build/10_short_circuit.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/10_short_circuit.mips
+```
+
+### Тест 11. `11_function_call.mc`
+
+```bash
+./build/mini_cc tests/11_function_call.mc -o build/11_function_call.o --emit-ir build/11_function_call.ll
+mipsel-linux-gnu-gcc runtime/main.c build/11_function_call.o -o build/11_function_call.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/11_function_call.mips
+```
+
+### Если хотите быстро проверить только компиляцию
+
+Для любого положительного теста можно временно запускать только первый шаг:
+
+```bash
+./build/mini_cc tests/ИМЯ_ТЕСТА.mc -o build/ИМЯ_ТЕСТА.o --emit-ir build/ИМЯ_ТЕСТА.ll
+```
+
+Это удобно, если вы хотите:
+
+- увидеть, проходит ли парсинг;
+- увидеть, проходит ли семантика;
+- посмотреть на сгенерированный LLVM IR без линковки и запуска.
