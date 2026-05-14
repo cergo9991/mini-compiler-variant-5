@@ -78,8 +78,8 @@ int x = 10 + 2;
 
 - пропускает пробелы и переводы строк;
 - пропускает комментарии `// ...` и `/* ... */`;
-- распознает ключевые слова `return`, `if`, `else`, `for`, `do`, `while`, `fn`, `int`;
-- распознает составные операторы `==`, `!=`, `<=`, `>=`, `&&`, `||`, `->`;
+- распознает ключевые слова `return`, `if`, `else`, `for`, `do`, `while`, `int`, `float`;
+- распознает составные операторы `==`, `!=`, `<=`, `>=`, `&&`, `||`;
 - распознает числа;
 - распознает идентификаторы;
 - для остальных одиночных символов возвращает сам символ, например `'+'`, `'-'`, `'('`, `')'`, `';'`.
@@ -164,13 +164,13 @@ return a + 2;
 Какие узлы там есть:
 
 - выражения:
-  - `IntLiteral`
-  - `VarExpr`
-  - `UnaryExpr`
-  - `BinaryExpr`
-  - `AssignExpr`
-  - `TernaryExpr`
-  - `CallExpr`
+- `IntLiteral`
+- `FloatLiteral`
+- `VarExpr`
+- `UnaryExpr`
+- `BinaryExpr`
+- `AssignExpr`
+- `CallExpr`
 - операторы:
   - `BlockStmt`
   - `VarDeclStmt`
@@ -349,7 +349,7 @@ runtime/main.c + cross-compiler
 
 Получает AST после успешной семантики и строит LLVM IR.
 
-Он особенно зависит от семантики, потому что использует уже вычисленные типы выражений, например при загрузке переменной или построении `PHI` для тернарного оператора.
+Он особенно зависит от семантики, потому что использует уже вычисленные типы выражений, например при загрузке переменной, выборе `CreateAdd` против `CreateFAdd` и проверке типов сравнений.
 
 ### `runtime/main.c`
 
@@ -381,7 +381,7 @@ int64_t compiled_fn(int64_t arg);
 - арифметику `+ - * / %`;
 - сравнения `== != < <= > >=`;
 - логические операции `&& || !`;
-- тернарный оператор `?:`.
+- тип `float`.
 
 ## 11. Как понять разницу между этапами на одном примере
 
@@ -660,7 +660,6 @@ std::string targetTriple_ = "mipsel-unknown-linux-gnu";
 Уровни идут сверху вниз так:
 
 - `assignment`
-- `ternary`
 - `logical_or`
 - `logical_and`
 - `equality`
@@ -738,7 +737,7 @@ additive
 - проверку вызовов функций;
 - проверку количества аргументов;
 - проверку типов аргументов;
-- проверку совпадения типов ветвей тернарного оператора;
+- проверку корректности арифметики над `int` и `float`;
 - вычисление `inferredType` для выражений.
 
 То есть семантика здесь уже довольно полноценная для учебного мини-языка.
@@ -799,10 +798,12 @@ LLVM IR нужен как промежуточный язык между AST и 
 Примеры соответствия:
 
 - `a + b` -> `CreateAdd`
+- `a + b` для `float` -> `CreateFAdd`
 - `a * b` -> `CreateMul`
+- `a * b` для `float` -> `CreateFMul`
 - `a < b` -> `CreateICmpSLT`
+- `a < b` для `float` -> `CreateFCmpOLT`
 - `if` -> `CreateCondBr` и несколько basic blocks
-- `x ? y : z` -> ветвление и `PHI`
 - `&&` и `||` -> short-circuit через блоки и `PHI`
 
 Смысл LLVM IR в этом проекте:
@@ -1081,6 +1082,40 @@ qemu-mipsel -L /usr/mipsel-linux-gnu build/10_short_circuit.mips
 mipsel-linux-gnu-gcc runtime/main.c build/11_function_call.o -o build/11_function_call.mips
 qemu-mipsel -L /usr/mipsel-linux-gnu build/11_function_call.mips
 ```
+
+### Тест 12. `12_float_arithmetic.mc`
+
+```bash
+./build/mini_cc tests/12_float_arithmetic.mc -o build/12_float_arithmetic.o --emit-ir build/12_float_arithmetic.ll
+mipsel-linux-gnu-gcc runtime/main.c build/12_float_arithmetic.o -o build/12_float_arithmetic.mips
+qemu-mipsel -L /usr/mipsel-linux-gnu build/12_float_arithmetic.mips
+```
+
+Ожидаемый вывод:
+
+```text
+12
+```
+
+Этот тест полезен тем, что проверяет:
+
+- тип `float`;
+- литералы с точкой;
+- вызов функции с `float`-параметрами;
+- арифметику над `float`;
+- сравнение `float`;
+- совместную работу `float` и `do/while`.
+
+### Тест 13. `13_float_type_error.mc`
+
+```bash
+./build/mini_cc tests/13_float_type_error.mc -o build/13_float_type_error.o
+```
+
+Ожидаемое поведение:
+
+- объектный файл не должен быть выпущен;
+- компилятор должен напечатать `semantic error`.
 
 ### Если хотите быстро проверить только компиляцию
 

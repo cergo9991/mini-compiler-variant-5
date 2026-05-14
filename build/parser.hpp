@@ -62,22 +62,22 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    FN = 258,                      /* FN  */
-    RETURN = 259,                  /* RETURN  */
-    IF = 260,                      /* IF  */
-    ELSE = 261,                    /* ELSE  */
-    FOR = 262,                     /* FOR  */
-    DO = 263,                      /* DO  */
-    WHILE = 264,                   /* WHILE  */
-    INT_KW = 265,                  /* INT_KW  */
-    ARROW = 266,                   /* ARROW  */
-    EQ = 267,                      /* EQ  */
-    NE = 268,                      /* NE  */
-    LE = 269,                      /* LE  */
-    GE = 270,                      /* GE  */
-    AND = 271,                     /* AND  */
-    OR = 272,                      /* OR  */
-    INTEGER = 273,                 /* INTEGER  */
+    RETURN = 258,                  /* RETURN  */
+    IF = 259,                      /* IF  */
+    ELSE = 260,                    /* ELSE  */
+    FOR = 261,                     /* FOR  */
+    DO = 262,                      /* DO  */
+    WHILE = 263,                   /* WHILE  */
+    INT_KW = 264,                  /* INT_KW  */
+    FLOAT_KW = 265,                /* FLOAT_KW  */
+    EQ = 266,                      /* EQ  */
+    NE = 267,                      /* NE  */
+    LE = 268,                      /* LE  */
+    GE = 269,                      /* GE  */
+    AND = 270,                     /* AND  */
+    OR = 271,                      /* OR  */
+    INTEGER = 272,                 /* INTEGER  */
+    FLOAT_LITERAL = 273,           /* FLOAT_LITERAL  */
     IDENT = 274                    /* IDENT  */
   };
   typedef enum yytokentype yytoken_kind_t;
@@ -90,6 +90,7 @@ union YYSTYPE
 #line 32 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
 
     std::int64_t int_value;
+    double float_value;
     char *str;
     int type_kind;
     mc::Expr *expr;
@@ -102,7 +103,7 @@ union YYSTYPE
     mc::StmtList *stmts;
     mc::FunctionList *funcs;
 
-#line 106 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.hpp"
+#line 107 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

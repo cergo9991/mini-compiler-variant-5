@@ -4,6 +4,14 @@
 
 namespace mc {
 
+namespace {
+
+bool isNumericType(TypeKind type) {
+    return type == TypeKind::Int || type == TypeKind::Float;
+}
+
+} // namespace
+
 bool SemanticAnalyzer::analyze(Program &program) {
     errors_.clear();
     functions_.clear();
@@ -58,6 +66,12 @@ TypeKind SemanticAnalyzer::analyzeExpr(Expr &expr) {
         return expr.inferredType;
     }
 
+    if (auto *literal = dynamic_cast<FloatLiteral *>(&expr)) {
+        (void)literal;
+        expr.inferredType = TypeKind::Float;
+        return expr.inferredType;
+    }
+
     if (auto *var = dynamic_cast<VarExpr *>(&expr)) {
         const TypeKind *type = lookup(var->name);
         if (!type) {
@@ -72,8 +86,10 @@ TypeKind SemanticAnalyzer::analyzeExpr(Expr &expr) {
     if (auto *unary = dynamic_cast<UnaryExpr *>(&expr)) {
         TypeKind operand = analyzeExpr(*unary->operand);
         if (unary->op == UnaryOp::Neg) {
-            requireAt(operand, TypeKind::Int, unary->loc, "unary '-'");
-            expr.inferredType = TypeKind::Int;
+            if (!isNumericType(operand)) {
+                errorAt(unary->loc, "unary '-' expects int or float, got " + std::string(typeName(operand)));
+            }
+            expr.inferredType = operand;
         } else {
             requireAt(operand, TypeKind::Bool, unary->loc, "unary '!'");
             expr.inferredType = TypeKind::Bool;
@@ -90,9 +106,22 @@ TypeKind SemanticAnalyzer::analyzeExpr(Expr &expr) {
         case BinaryOp::Sub:
         case BinaryOp::Mul:
         case BinaryOp::Div:
+            if (!isNumericType(lhs)) {
+                errorAt(binary->lhs->loc, "left operand of arithmetic operator must have type int or float, got " +
+                                              std::string(typeName(lhs)));
+            }
+            if (!isNumericType(rhs)) {
+                errorAt(binary->rhs->loc, "right operand of arithmetic operator must have type int or float, got " +
+                                              std::string(typeName(rhs)));
+            }
+            if (isNumericType(lhs) && isNumericType(rhs) && lhs != rhs) {
+                errorAt(binary->loc, "arithmetic operands must have the same type");
+            }
+            expr.inferredType = lhs;
+            break;
         case BinaryOp::Mod:
-            requireAt(lhs, TypeKind::Int, binary->lhs->loc, "left operand of arithmetic operator");
-            requireAt(rhs, TypeKind::Int, binary->rhs->loc, "right operand of arithmetic operator");
+            requireAt(lhs, TypeKind::Int, binary->lhs->loc, "left operand of '%' operator");
+            requireAt(rhs, TypeKind::Int, binary->rhs->loc, "right operand of '%' operator");
             expr.inferredType = TypeKind::Int;
             break;
         case BinaryOp::Eq:
@@ -106,8 +135,17 @@ TypeKind SemanticAnalyzer::analyzeExpr(Expr &expr) {
         case BinaryOp::Le:
         case BinaryOp::Gt:
         case BinaryOp::Ge:
-            requireAt(lhs, TypeKind::Int, binary->lhs->loc, "left operand of comparison operator");
-            requireAt(rhs, TypeKind::Int, binary->rhs->loc, "right operand of comparison operator");
+            if (!isNumericType(lhs)) {
+                errorAt(binary->lhs->loc, "left operand of comparison operator must have type int or float, got " +
+                                              std::string(typeName(lhs)));
+            }
+            if (!isNumericType(rhs)) {
+                errorAt(binary->rhs->loc, "right operand of comparison operator must have type int or float, got " +
+                                              std::string(typeName(rhs)));
+            }
+            if (isNumericType(lhs) && isNumericType(rhs) && lhs != rhs) {
+                errorAt(binary->loc, "comparison operands must have the same type");
+            }
             expr.inferredType = TypeKind::Bool;
             break;
         case BinaryOp::And:
@@ -134,19 +172,6 @@ TypeKind SemanticAnalyzer::analyzeExpr(Expr &expr) {
                                      assign->name + "' of type " + typeName(*target));
         }
         expr.inferredType = *target;
-        return expr.inferredType;
-    }
-
-    if (auto *ternary = dynamic_cast<TernaryExpr *>(&expr)) {
-        TypeKind condition = analyzeExpr(*ternary->condition);
-        requireAt(condition, TypeKind::Bool, ternary->condition->loc, "ternary condition");
-
-        TypeKind thenType = analyzeExpr(*ternary->thenExpr);
-        TypeKind elseType = analyzeExpr(*ternary->elseExpr);
-        if (thenType != elseType) {
-            errorAt(ternary->loc, "ternary branches must have the same type");
-        }
-        expr.inferredType = thenType;
         return expr.inferredType;
     }
 

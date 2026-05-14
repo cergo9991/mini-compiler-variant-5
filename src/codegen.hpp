@@ -26,6 +26,7 @@ public:
 
 private:
     llvm::Type *llvmType(TypeKind type);
+    llvm::Constant *zeroValue(TypeKind type);
     llvm::Function *declareFunction(const FunctionDecl &fn);
     bool codegenFunction(FunctionDecl &fn);
     bool codegenBlock(BlockStmt &block, bool createScope);
@@ -33,7 +34,6 @@ private:
     llvm::Value *codegenExpr(Expr &expr);
     bool codegenDoWhile(DoWhileStmt &stmt);
     llvm::Value *codegenLogical(BinaryExpr &expr);
-    llvm::Value *codegenTernary(TernaryExpr &expr);
     llvm::AllocaInst *createEntryAlloca(llvm::Function *fn, const std::string &name, TypeKind type);
     llvm::AllocaInst *lookupVariable(const std::string &name);
 

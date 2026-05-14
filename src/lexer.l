@@ -1,5 +1,6 @@
 %option noyywrap nounput noinput yylineno
 %x COMMENT
+FLOATLIT    (([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)
 
 %{
 #include <cstdlib>
@@ -33,9 +34,8 @@ static int yycolumn = 1;
 "for"                       { return FOR; }
 "do"                        { return DO; }
 "while"                     { return WHILE; }
-"fn"                        { return FN; }
 "int"                       { return INT_KW; }
-"->"                        { return ARROW; }
+"float"                     { return FLOAT_KW; }
 "=="                        { return EQ; }
 "!="                        { return NE; }
 "<="                        { return LE; }
@@ -43,6 +43,7 @@ static int yycolumn = 1;
 "&&"                        { return AND; }
 "||"                        { return OR; }
 
+{FLOATLIT}                  { yylval.float_value = std::strtod(yytext, nullptr); return FLOAT_LITERAL; }
 [0-9]+                      { yylval.int_value = std::strtoll(yytext, nullptr, 10); return INTEGER; }
 [A-Za-z_][A-Za-z0-9_]*      { yylval.str = ::strdup(yytext); return IDENT; }
 

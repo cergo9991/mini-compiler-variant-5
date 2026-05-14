@@ -31,6 +31,7 @@ std::vector<std::string> g_parse_errors;
 
 %union {
     std::int64_t int_value;
+    double float_value;
     char *str;
     int type_kind;
     mc::Expr *expr;
@@ -44,11 +45,11 @@ std::vector<std::string> g_parse_errors;
     mc::FunctionList *funcs;
 }
 
-%token FN RETURN IF ELSE FOR DO WHILE
-%token INT_KW
-%token ARROW
+%token RETURN IF ELSE FOR DO WHILE
+%token INT_KW FLOAT_KW
 %token EQ NE LE GE AND OR
 %token <int_value> INTEGER
+%token <float_value> FLOAT_LITERAL
 %token <str> IDENT
 
 %type <type_kind> type
@@ -60,7 +61,7 @@ std::vector<std::string> g_parse_errors;
 %type <block> block
 %type <stmts> statement_list
 %type <stmt> statement var_decl for_init_opt for_init
-%type <expr> expression assignment ternary logical_or logical_and equality relational additive multiplicative unary primary expression_opt
+%type <expr> expression assignment logical_or logical_and equality relational additive multiplicative unary primary expression_opt
 
 %destructor { std::free($$); } <str>
 %destructor { delete $$; } <expr>
@@ -111,19 +112,11 @@ function
           $$ = new mc::FunctionDecl(static_cast<mc::TypeKind>($1), name, std::move(params), std::unique_ptr<mc::BlockStmt>($6));
           MC_SET_LOC($$, @1);
       }
-    | FN IDENT '(' param_list_opt ')' ARROW type block
-      {
-          std::string name($2);
-          std::free($2);
-          auto params = std::move(*$4);
-          delete $4;
-          $$ = new mc::FunctionDecl(static_cast<mc::TypeKind>($7), name, std::move(params), std::unique_ptr<mc::BlockStmt>($8));
-          MC_SET_LOC($$, @1);
-      }
     ;
 
 type
     : INT_KW { $$ = static_cast<int>(mc::TypeKind::Int); }
+    | FLOAT_KW { $$ = static_cast<int>(mc::TypeKind::Float); }
     ;
 
 param_list_opt
@@ -244,15 +237,6 @@ assignment
           $$ = new mc::AssignExpr(name, std::unique_ptr<mc::Expr>($3));
           MC_SET_LOC($$, @1);
       }
-    | ternary { $$ = $1; }
-    ;
-
-ternary
-    : logical_or '?' expression ':' ternary
-      {
-          $$ = new mc::TernaryExpr(std::unique_ptr<mc::Expr>($1), std::unique_ptr<mc::Expr>($3), std::unique_ptr<mc::Expr>($5));
-          MC_SET_LOC($$, @1);
-      }
     | logical_or { $$ = $1; }
     ;
 
@@ -363,6 +347,11 @@ primary
     : INTEGER
       {
           $$ = new mc::IntLiteral($1);
+          MC_SET_LOC($$, @1);
+      }
+    | FLOAT_LITERAL
+      {
+          $$ = new mc::FloatLiteral($1);
           MC_SET_LOC($$, @1);
       }
     | IDENT

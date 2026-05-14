@@ -12,16 +12,13 @@
 ## Ключевые возможности
 
 - C-style синтаксис функций и блоков.
-- Тип `int`, который компилируется в LLVM `i64`.
+- Типы `int` и `float`, которые компилируются в LLVM `i64` и `double`.
 - Конструкции: `if / else`, `for`, `do { ... } while (condition);`, `return`, вызовы функций.
 - Арифметика: `+ - * / %`.
 - Сравнения: `== != < <= > >=`.
 - Логические выражения: `&& || !` с short-circuit для `&&` и `||`.
-- Тернарный оператор `?:`.
 - Отдельная семантическая фаза с диагностикой ошибок.
 - Генерация LLVM IR через `--emit-ir` и объектного файла под `mipsel-unknown-linux-gnu`.
-
-Для совместимости с ранней версией проекта парсер также понимает форму `fn name(...) -> int`, но основной синтаксис варианта 5 - C-style.
 
 ## Архитектура проекта
 
@@ -178,10 +175,10 @@ qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
 
 - `tests/05_do_while_sum.mc` -> получает: исходный код учебной программы -> отдаёт: текст для чтения компилятором
 - `src/driver.cpp` -> получает: аргументы CLI и путь к `.mc` -> отдаёт: запуск конвейера `lexer -> parser -> sema -> codegen`
-- `src/lexer.l` -> получает: сырой текст программы -> отдаёт: токены, например `int`, `compiled_fn`, `do`, `while`, числа и операторы
+- `src/lexer.l` -> получает: сырой текст программы -> отдаёт: токены, например `int`, `float`, `compiled_fn`, `do`, `while`, числа и операторы
 - `src/parser.y` -> получает: токены от лексера -> отдаёт: AST, то есть дерево программы в памяти
 - `src/ast.hpp` -> получает: ничего во время запуска не читает, а задаёт структуру AST -> отдаёт: описания узлов `Program`, `FunctionDecl`, `DoWhileStmt`, `ReturnStmt` и других
-- `src/ast.cpp` -> получает: значения `TypeKind` -> отдаёт: строковые имена типов для диагностик, например `int` и `bool`
+- `src/ast.cpp` -> получает: значения `TypeKind` -> отдаёт: строковые имена типов для диагностик, например `int`, `float` и `bool`
 - `src/sema.cpp` -> получает: AST -> отдаёт: либо список semantic errors, либо корректный AST с выведенными типами
 - `src/codegen.cpp` -> получает: корректный AST после semantic analysis -> отдаёт: `build/05_do_while_sum.ll` и `build/05_do_while_sum.o`
 - `runtime/main.c` -> получает: результат линковки с функцией `compiled_fn` -> отдаёт: точку входа `main()` и печать результата
@@ -285,6 +282,7 @@ qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
 ./build/mini_cc tests/07_do_while_power.mc -o build/07_do_while_power.o --emit-ir build/07_do_while_power.ll
 ./build/mini_cc tests/10_short_circuit.mc -o build/10_short_circuit.o --emit-ir build/10_short_circuit.ll
 ./build/mini_cc tests/11_function_call.mc -o build/11_function_call.o --emit-ir build/11_function_call.ll
+./build/mini_cc tests/12_float_arithmetic.mc -o build/12_float_arithmetic.o --emit-ir build/12_float_arithmetic.ll
 ```
 
 Негативные тесты должны завершаться сообщением `semantic error`:
@@ -292,6 +290,7 @@ qemu-mipsel -L /usr/mipsel-linux-gnu build/05_do_while_sum.mips
 ```bash
 ./build/mini_cc tests/08_type_error.mc -o build/bad_type.o
 ./build/mini_cc tests/09_undeclared_variable.mc -o build/bad_name.o
+./build/mini_cc tests/13_float_type_error.mc -o build/bad_float_type.o
 ```
 
 Примеры ожидаемых сообщений:
@@ -327,7 +326,9 @@ semantic error: line 2, column 12: use of undeclared variable 'missing'
 │   ├── 08_type_error.mc
 │   ├── 09_undeclared_variable.mc
 │   ├── 10_short_circuit.mc
-│   └── 11_function_call.mc
+│   ├── 11_function_call.mc
+│   ├── 12_float_arithmetic.mc
+│   └── 13_float_type_error.mc
 ├── tools/
 │   └── scripts for report generation
 ├── diagram_grammar_variant_5_railroad.png
@@ -377,6 +378,7 @@ int compiled_fn(int arg) {
 ```
 
 Тип `int` внутри учебного языка компилируется в LLVM `i64`, что соответствует `int64_t` в runtime.
+Тип `float` внутри учебного языка компилируется в LLVM `double`; при этом точка входа `compiled_fn` по-прежнему должна иметь сигнатуру `int compiled_fn(int arg)`.
 
 ## Лицензия
 

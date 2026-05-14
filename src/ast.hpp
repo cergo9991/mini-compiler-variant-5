@@ -15,6 +15,7 @@ struct SourceLocation {
 
 enum class TypeKind {
     Int,
+    Float,
     Bool
 };
 
@@ -29,6 +30,11 @@ struct Expr {
 struct IntLiteral final : Expr {
     explicit IntLiteral(std::int64_t value) : value(value) {}
     std::int64_t value;
+};
+
+struct FloatLiteral final : Expr {
+    explicit FloatLiteral(double value) : value(value) {}
+    double value;
 };
 
 struct VarExpr final : Expr {
@@ -80,19 +86,6 @@ struct AssignExpr final : Expr {
 
     std::string name;
     std::unique_ptr<Expr> value;
-};
-
-struct TernaryExpr final : Expr {
-    TernaryExpr(std::unique_ptr<Expr> condition,
-                std::unique_ptr<Expr> thenExpr,
-                std::unique_ptr<Expr> elseExpr)
-        : condition(std::move(condition)),
-          thenExpr(std::move(thenExpr)),
-          elseExpr(std::move(elseExpr)) {}
-
-    std::unique_ptr<Expr> condition;
-    std::unique_ptr<Expr> thenExpr;
-    std::unique_ptr<Expr> elseExpr;
 };
 
 struct CallExpr final : Expr {

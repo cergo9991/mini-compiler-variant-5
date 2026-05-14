@@ -110,10 +110,24 @@ llvm::Type *CodeGenerator::llvmType(TypeKind type) {
     switch (type) {
     case TypeKind::Int:
         return llvm::Type::getInt64Ty(context_);
+    case TypeKind::Float:
+        return llvm::Type::getDoubleTy(context_);
     case TypeKind::Bool:
         return llvm::Type::getInt1Ty(context_);
     }
     return llvm::Type::getInt64Ty(context_);
+}
+
+llvm::Constant *CodeGenerator::zeroValue(TypeKind type) {
+    switch (type) {
+    case TypeKind::Int:
+        return llvm::ConstantInt::get(llvmType(type), 0, true);
+    case TypeKind::Float:
+        return llvm::ConstantFP::get(llvmType(type), 0.0);
+    case TypeKind::Bool:
+        return llvm::ConstantInt::getFalse(context_);
+    }
+    return llvm::ConstantInt::get(llvmType(TypeKind::Int), 0, true);
 }
 
 llvm::Function *CodeGenerator::declareFunction(const FunctionDecl &fn) {
@@ -155,7 +169,7 @@ bool CodeGenerator::codegenFunction(FunctionDecl &fn) {
     }
 
     if (!builder_.GetInsertBlock()->getTerminator()) {
-        builder_.CreateRet(llvm::ConstantInt::get(llvmType(fn.returnType), 0, true));
+        builder_.CreateRet(zeroValue(fn.returnType));
     }
 
     std::string verifyErrors;
@@ -212,7 +226,7 @@ bool CodeGenerator::codegenStmt(Stmt &stmt) {
                 return false;
             }
         } else {
-            initial = llvm::ConstantInt::get(llvmType(decl->type), 0, true);
+            initial = zeroValue(decl->type);
         }
 
         builder_.CreateStore(initial, alloca);
@@ -369,6 +383,10 @@ llvm::Value *CodeGenerator::codegenExpr(Expr &expr) {
         return llvm::ConstantInt::get(llvmType(TypeKind::Int), literal->value, true);
     }
 
+    if (auto *literal = dynamic_cast<FloatLiteral *>(&expr)) {
+        return llvm::ConstantFP::get(llvmType(TypeKind::Float), literal->value);
+    }
+
     if (auto *var = dynamic_cast<VarExpr *>(&expr)) {
         llvm::AllocaInst *alloca = lookupVariable(var->name);
         if (!alloca) {
@@ -384,6 +402,9 @@ llvm::Value *CodeGenerator::codegenExpr(Expr &expr) {
             return nullptr;
         }
         if (unary->op == UnaryOp::Neg) {
+            if (expr.inferredType == TypeKind::Float) {
+                return builder_.CreateFNeg(value, "fnegtmp");
+            }
             return builder_.CreateNeg(value, "negtmp");
         }
         return builder_.CreateNot(value, "nottmp");
@@ -402,26 +423,56 @@ llvm::Value *CodeGenerator::codegenExpr(Expr &expr) {
 
         switch (binary->op) {
         case BinaryOp::Add:
+            if (expr.inferredType == TypeKind::Float) {
+                return builder_.CreateFAdd(lhs, rhs, "faddtmp");
+            }
             return builder_.CreateAdd(lhs, rhs, "addtmp");
         case BinaryOp::Sub:
+            if (expr.inferredType == TypeKind::Float) {
+                return builder_.CreateFSub(lhs, rhs, "fsubtmp");
+            }
             return builder_.CreateSub(lhs, rhs, "subtmp");
         case BinaryOp::Mul:
+            if (expr.inferredType == TypeKind::Float) {
+                return builder_.CreateFMul(lhs, rhs, "fmultmp");
+            }
             return builder_.CreateMul(lhs, rhs, "multmp");
         case BinaryOp::Div:
+            if (expr.inferredType == TypeKind::Float) {
+                return builder_.CreateFDiv(lhs, rhs, "fdivtmp");
+            }
             return builder_.CreateSDiv(lhs, rhs, "divtmp");
         case BinaryOp::Mod:
             return builder_.CreateSRem(lhs, rhs, "modtmp");
         case BinaryOp::Eq:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpOEQ(lhs, rhs, "feqtmp");
+            }
             return builder_.CreateICmpEQ(lhs, rhs, "eqtmp");
         case BinaryOp::Ne:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpONE(lhs, rhs, "fnetmp");
+            }
             return builder_.CreateICmpNE(lhs, rhs, "netmp");
         case BinaryOp::Lt:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpOLT(lhs, rhs, "flttmp");
+            }
             return builder_.CreateICmpSLT(lhs, rhs, "lttmp");
         case BinaryOp::Le:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpOLE(lhs, rhs, "fletmp");
+            }
             return builder_.CreateICmpSLE(lhs, rhs, "letmp");
         case BinaryOp::Gt:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpOGT(lhs, rhs, "fgttmp");
+            }
             return builder_.CreateICmpSGT(lhs, rhs, "gttmp");
         case BinaryOp::Ge:
+            if (binary->lhs->inferredType == TypeKind::Float) {
+                return builder_.CreateFCmpOGE(lhs, rhs, "fgetmp");
+            }
             return builder_.CreateICmpSGE(lhs, rhs, "getmp");
         case BinaryOp::And:
         case BinaryOp::Or:
@@ -442,10 +493,6 @@ llvm::Value *CodeGenerator::codegenExpr(Expr &expr) {
         }
         builder_.CreateStore(value, alloca);
         return value;
-    }
-
-    if (auto *ternary = dynamic_cast<TernaryExpr *>(&expr)) {
-        return codegenTernary(*ternary);
     }
 
     if (auto *call = dynamic_cast<CallExpr *>(&expr)) {
@@ -505,44 +552,6 @@ llvm::Value *CodeGenerator::codegenLogical(BinaryExpr &expr) {
         phi->addIncoming(llvm::ConstantInt::getTrue(context_), lhsBB);
     }
     phi->addIncoming(rhs, rhsEndBB);
-    return phi;
-}
-
-llvm::Value *CodeGenerator::codegenTernary(TernaryExpr &expr) {
-    llvm::Function *function = builder_.GetInsertBlock()->getParent();
-    llvm::Value *condition = codegenExpr(*expr.condition);
-    if (!condition) {
-        return nullptr;
-    }
-
-    llvm::BasicBlock *thenBB = llvm::BasicBlock::Create(context_, "ternary.then", function);
-    llvm::BasicBlock *elseBB = llvm::BasicBlock::Create(context_, "ternary.else");
-    llvm::BasicBlock *mergeBB = llvm::BasicBlock::Create(context_, "ternary.end");
-
-    builder_.CreateCondBr(condition, thenBB, elseBB);
-
-    builder_.SetInsertPoint(thenBB);
-    llvm::Value *thenValue = codegenExpr(*expr.thenExpr);
-    if (!thenValue) {
-        return nullptr;
-    }
-    llvm::BasicBlock *thenEndBB = builder_.GetInsertBlock();
-    builder_.CreateBr(mergeBB);
-
-    function->getBasicBlockList().push_back(elseBB);
-    builder_.SetInsertPoint(elseBB);
-    llvm::Value *elseValue = codegenExpr(*expr.elseExpr);
-    if (!elseValue) {
-        return nullptr;
-    }
-    llvm::BasicBlock *elseEndBB = builder_.GetInsertBlock();
-    builder_.CreateBr(mergeBB);
-
-    function->getBasicBlockList().push_back(mergeBB);
-    builder_.SetInsertPoint(mergeBB);
-    llvm::PHINode *phi = builder_.CreatePHI(llvmType(expr.inferredType), 2, "ternarytmp");
-    phi->addIncoming(thenValue, thenEndBB);
-    phi->addIncoming(elseValue, elseEndBB);
     return phi;
 }
 

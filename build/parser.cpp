@@ -120,22 +120,22 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_FN = 3,                         /* FN  */
-  YYSYMBOL_RETURN = 4,                     /* RETURN  */
-  YYSYMBOL_IF = 5,                         /* IF  */
-  YYSYMBOL_ELSE = 6,                       /* ELSE  */
-  YYSYMBOL_FOR = 7,                        /* FOR  */
-  YYSYMBOL_DO = 8,                         /* DO  */
-  YYSYMBOL_WHILE = 9,                      /* WHILE  */
-  YYSYMBOL_INT_KW = 10,                    /* INT_KW  */
-  YYSYMBOL_ARROW = 11,                     /* ARROW  */
-  YYSYMBOL_EQ = 12,                        /* EQ  */
-  YYSYMBOL_NE = 13,                        /* NE  */
-  YYSYMBOL_LE = 14,                        /* LE  */
-  YYSYMBOL_GE = 15,                        /* GE  */
-  YYSYMBOL_AND = 16,                       /* AND  */
-  YYSYMBOL_OR = 17,                        /* OR  */
-  YYSYMBOL_INTEGER = 18,                   /* INTEGER  */
+  YYSYMBOL_RETURN = 3,                     /* RETURN  */
+  YYSYMBOL_IF = 4,                         /* IF  */
+  YYSYMBOL_ELSE = 5,                       /* ELSE  */
+  YYSYMBOL_FOR = 6,                        /* FOR  */
+  YYSYMBOL_DO = 7,                         /* DO  */
+  YYSYMBOL_WHILE = 8,                      /* WHILE  */
+  YYSYMBOL_INT_KW = 9,                     /* INT_KW  */
+  YYSYMBOL_FLOAT_KW = 10,                  /* FLOAT_KW  */
+  YYSYMBOL_EQ = 11,                        /* EQ  */
+  YYSYMBOL_NE = 12,                        /* NE  */
+  YYSYMBOL_LE = 13,                        /* LE  */
+  YYSYMBOL_GE = 14,                        /* GE  */
+  YYSYMBOL_AND = 15,                       /* AND  */
+  YYSYMBOL_OR = 16,                        /* OR  */
+  YYSYMBOL_INTEGER = 17,                   /* INTEGER  */
+  YYSYMBOL_FLOAT_LITERAL = 18,             /* FLOAT_LITERAL  */
   YYSYMBOL_IDENT = 19,                     /* IDENT  */
   YYSYMBOL_20_ = 20,                       /* '('  */
   YYSYMBOL_21_ = 21,                       /* ')'  */
@@ -144,43 +144,40 @@ enum yysymbol_kind_t
   YYSYMBOL_24_ = 24,                       /* '}'  */
   YYSYMBOL_25_ = 25,                       /* ';'  */
   YYSYMBOL_26_ = 26,                       /* '='  */
-  YYSYMBOL_27_ = 27,                       /* '?'  */
-  YYSYMBOL_28_ = 28,                       /* ':'  */
-  YYSYMBOL_29_ = 29,                       /* '<'  */
-  YYSYMBOL_30_ = 30,                       /* '>'  */
-  YYSYMBOL_31_ = 31,                       /* '+'  */
-  YYSYMBOL_32_ = 32,                       /* '-'  */
-  YYSYMBOL_33_ = 33,                       /* '*'  */
-  YYSYMBOL_34_ = 34,                       /* '/'  */
-  YYSYMBOL_35_ = 35,                       /* '%'  */
-  YYSYMBOL_36_ = 36,                       /* '!'  */
-  YYSYMBOL_YYACCEPT = 37,                  /* $accept  */
-  YYSYMBOL_program = 38,                   /* program  */
-  YYSYMBOL_function_list = 39,             /* function_list  */
-  YYSYMBOL_function = 40,                  /* function  */
-  YYSYMBOL_type = 41,                      /* type  */
-  YYSYMBOL_param_list_opt = 42,            /* param_list_opt  */
-  YYSYMBOL_param_list = 43,                /* param_list  */
-  YYSYMBOL_block = 44,                     /* block  */
-  YYSYMBOL_statement_list = 45,            /* statement_list  */
-  YYSYMBOL_statement = 46,                 /* statement  */
-  YYSYMBOL_var_decl = 47,                  /* var_decl  */
-  YYSYMBOL_for_init_opt = 48,              /* for_init_opt  */
-  YYSYMBOL_for_init = 49,                  /* for_init  */
-  YYSYMBOL_expression_opt = 50,            /* expression_opt  */
-  YYSYMBOL_expression = 51,                /* expression  */
-  YYSYMBOL_assignment = 52,                /* assignment  */
-  YYSYMBOL_ternary = 53,                   /* ternary  */
-  YYSYMBOL_logical_or = 54,                /* logical_or  */
-  YYSYMBOL_logical_and = 55,               /* logical_and  */
-  YYSYMBOL_equality = 56,                  /* equality  */
-  YYSYMBOL_relational = 57,                /* relational  */
-  YYSYMBOL_additive = 58,                  /* additive  */
-  YYSYMBOL_multiplicative = 59,            /* multiplicative  */
-  YYSYMBOL_unary = 60,                     /* unary  */
-  YYSYMBOL_primary = 61,                   /* primary  */
-  YYSYMBOL_argument_list_opt = 62,         /* argument_list_opt  */
-  YYSYMBOL_argument_list = 63              /* argument_list  */
+  YYSYMBOL_27_ = 27,                       /* '<'  */
+  YYSYMBOL_28_ = 28,                       /* '>'  */
+  YYSYMBOL_29_ = 29,                       /* '+'  */
+  YYSYMBOL_30_ = 30,                       /* '-'  */
+  YYSYMBOL_31_ = 31,                       /* '*'  */
+  YYSYMBOL_32_ = 32,                       /* '/'  */
+  YYSYMBOL_33_ = 33,                       /* '%'  */
+  YYSYMBOL_34_ = 34,                       /* '!'  */
+  YYSYMBOL_YYACCEPT = 35,                  /* $accept  */
+  YYSYMBOL_program = 36,                   /* program  */
+  YYSYMBOL_function_list = 37,             /* function_list  */
+  YYSYMBOL_function = 38,                  /* function  */
+  YYSYMBOL_type = 39,                      /* type  */
+  YYSYMBOL_param_list_opt = 40,            /* param_list_opt  */
+  YYSYMBOL_param_list = 41,                /* param_list  */
+  YYSYMBOL_block = 42,                     /* block  */
+  YYSYMBOL_statement_list = 43,            /* statement_list  */
+  YYSYMBOL_statement = 44,                 /* statement  */
+  YYSYMBOL_var_decl = 45,                  /* var_decl  */
+  YYSYMBOL_for_init_opt = 46,              /* for_init_opt  */
+  YYSYMBOL_for_init = 47,                  /* for_init  */
+  YYSYMBOL_expression_opt = 48,            /* expression_opt  */
+  YYSYMBOL_expression = 49,                /* expression  */
+  YYSYMBOL_assignment = 50,                /* assignment  */
+  YYSYMBOL_logical_or = 51,                /* logical_or  */
+  YYSYMBOL_logical_and = 52,               /* logical_and  */
+  YYSYMBOL_equality = 53,                  /* equality  */
+  YYSYMBOL_relational = 54,                /* relational  */
+  YYSYMBOL_additive = 55,                  /* additive  */
+  YYSYMBOL_multiplicative = 56,            /* multiplicative  */
+  YYSYMBOL_unary = 57,                     /* unary  */
+  YYSYMBOL_primary = 58,                   /* primary  */
+  YYSYMBOL_argument_list_opt = 59,         /* argument_list_opt  */
+  YYSYMBOL_argument_list = 60              /* argument_list  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -297,7 +294,7 @@ typedef int yytype_uint16;
 
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_uint8 yy_state_t;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -509,18 +506,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  8
+#define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   124
+#define YYLAST   117
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  37
+#define YYNTOKENS  35
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  27
+#define YYNNTS  26
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  65
+#define YYNRULES  64
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  129
+#define YYNSTATES  118
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   274
@@ -540,10 +537,10 @@ static const yytype_int8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    36,     2,     2,     2,    35,     2,     2,
-      20,    21,    33,    31,    22,    32,     2,    34,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    28,    25,
-      29,    26,    30,    27,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    34,     2,     2,     2,    33,     2,     2,
+      20,    21,    31,    29,    22,    30,     2,    32,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
+      27,    26,    28,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -571,13 +568,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    81,    81,    92,    97,   105,   114,   126,   130,   131,
-     135,   141,   150,   160,   161,   169,   170,   175,   180,   185,
-     190,   195,   200,   204,   211,   221,   222,   226,   227,   231,
-     232,   236,   240,   247,   251,   256,   260,   265,   269,   274,
-     278,   283,   288,   292,   297,   302,   307,   312,   316,   321,
-     326,   330,   335,   340,   345,   349,   354,   359,   363,   368,
-     375,   384,   388,   389,   393,   398
+       0,    82,    82,    93,    98,   106,   118,   119,   123,   124,
+     128,   134,   143,   153,   154,   162,   163,   168,   173,   178,
+     183,   188,   193,   197,   204,   214,   215,   219,   220,   224,
+     225,   229,   233,   240,   244,   249,   253,   258,   262,   267,
+     272,   276,   281,   286,   291,   296,   300,   305,   310,   314,
+     319,   324,   329,   333,   338,   343,   347,   352,   357,   364,
+     373,   377,   378,   382,   387
 };
 #endif
 
@@ -593,16 +590,16 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "FN", "RETURN", "IF",
-  "ELSE", "FOR", "DO", "WHILE", "INT_KW", "ARROW", "EQ", "NE", "LE", "GE",
-  "AND", "OR", "INTEGER", "IDENT", "'('", "')'", "','", "'{'", "'}'",
-  "';'", "'='", "'?'", "':'", "'<'", "'>'", "'+'", "'-'", "'*'", "'/'",
+  "\"end of file\"", "error", "\"invalid token\"", "RETURN", "IF", "ELSE",
+  "FOR", "DO", "WHILE", "INT_KW", "FLOAT_KW", "EQ", "NE", "LE", "GE",
+  "AND", "OR", "INTEGER", "FLOAT_LITERAL", "IDENT", "'('", "')'", "','",
+  "'{'", "'}'", "';'", "'='", "'<'", "'>'", "'+'", "'-'", "'*'", "'/'",
   "'%'", "'!'", "$accept", "program", "function_list", "function", "type",
   "param_list_opt", "param_list", "block", "statement_list", "statement",
   "var_decl", "for_init_opt", "for_init", "expression_opt", "expression",
-  "assignment", "ternary", "logical_or", "logical_and", "equality",
-  "relational", "additive", "multiplicative", "unary", "primary",
-  "argument_list_opt", "argument_list", YY_NULLPTR
+  "assignment", "logical_or", "logical_and", "equality", "relational",
+  "additive", "multiplicative", "unary", "primary", "argument_list_opt",
+  "argument_list", YY_NULLPTR
 };
 
 static const char *
@@ -626,19 +623,18 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       5,    -2,   -49,    28,     5,   -49,    17,    18,   -49,   -49,
-      25,    40,    40,    52,    55,    58,    56,   -49,    70,    40,
-      62,    40,    71,   -49,   -49,    62,   -49,    36,   -49,    43,
-      72,    73,    62,   -49,    11,    43,   -49,    46,    46,    75,
-     -49,   -49,    66,    74,   -49,   -49,   -11,    79,    35,     4,
-      26,    54,   -49,   -49,    76,    43,     3,    88,    43,    43,
-      77,    80,   -49,   -49,    78,   -49,   -49,    46,    43,    46,
-      46,    46,    46,    46,    46,    46,    46,    46,    46,    46,
-      46,   -49,    82,   -49,    81,   -49,   -49,    85,   -49,    86,
-      87,   -49,   -49,    43,    79,    83,    35,     4,     4,    26,
-      26,    26,    26,    54,    54,   -49,   -49,   -49,    62,    43,
-      43,   -49,    43,   -49,    46,   102,    89,   -49,    91,   -49,
-     -49,    62,    43,    90,   -49,    92,   -49,    62,   -49
+      39,   -49,   -49,    11,    39,   -49,   -15,   -49,   -49,     0,
+      39,     9,    10,    13,   -49,    21,    39,   -49,   -49,    14,
+      33,   -49,    41,    42,    50,    21,   -49,   -49,   -11,    41,
+     -49,    68,    68,    53,   -49,   -49,    51,    55,   -49,    65,
+      74,    43,    64,    35,    -6,   -49,   -49,    58,    41,     4,
+      85,    41,    41,    73,    75,   -49,   -49,    71,   -49,   -49,
+      68,    68,    68,    68,    68,    68,    68,    68,    68,    68,
+      68,    68,    68,   -49,    78,   -49,    76,   -49,   -49,    80,
+     -49,    82,    83,   -49,   -49,    41,    74,    43,    64,    64,
+      35,    35,    35,    35,    -6,    -6,   -49,   -49,   -49,    21,
+      41,    41,   -49,    41,   -49,    99,    81,   -49,    86,   -49,
+      21,    41,    84,   -49,    87,   -49,    21,   -49
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -646,115 +642,111 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     7,     0,     2,     3,     0,     0,     1,     4,
-       0,     8,     8,     0,     0,     9,     0,    10,     0,     0,
-       0,     0,     0,    13,     5,     0,    11,     0,     6,     0,
-       0,     0,     0,    58,    59,     0,    12,     0,     0,     0,
-      22,    14,     0,     0,    31,    33,    35,    37,    39,    42,
-      47,    50,    54,    57,     0,     0,    25,     0,    62,     0,
-       0,    59,    55,    56,    23,    15,    16,     0,     0,     0,
+       0,     6,     7,     0,     2,     3,     0,     1,     4,     0,
+       8,     0,     0,     9,    10,     0,     0,    13,     5,     0,
+       0,    11,     0,     0,     0,     0,    56,    57,    58,     0,
+      12,     0,     0,     0,    22,    14,     0,     0,    31,    33,
+      35,    37,    40,    45,    48,    52,    55,     0,     0,    25,
+       0,    61,     0,     0,    58,    53,    54,    23,    15,    16,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    17,     0,    27,     0,    26,    28,     0,    64,     0,
-      63,    32,    61,     0,    36,     0,    38,    40,    41,    44,
-      46,    43,    45,    48,    49,    51,    52,    53,     0,    29,
-       0,    60,     0,    24,     0,    19,     0,    30,     0,    65,
-      34,     0,    29,     0,    18,     0,    21,     0,    20
+       0,     0,     0,    17,     0,    27,     0,    26,    28,     0,
+      63,     0,    62,    32,    60,     0,    34,    36,    38,    39,
+      42,    44,    41,    43,    46,    47,    49,    50,    51,     0,
+      29,     0,    59,     0,    24,    19,     0,    30,     0,    64,
+       0,    29,     0,    18,     0,    21,     0,    20
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -49,   -49,   -49,   106,    -7,   104,   -49,   -25,   -49,   -49,
-      61,   -49,   -49,    -4,   -26,    60,     6,   -49,    57,    53,
-      -1,   -48,    -3,   -27,   -49,   -49,   -49
+     -49,   -49,   -49,   106,    -8,   -49,   -49,   -20,   -49,   -49,
+      62,   -49,   -49,     1,   -19,    61,   -49,    54,    56,     6,
+     -48,     5,   -25,   -49,   -49,   -49
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,     5,     6,    14,    15,    24,    27,    41,
-      42,    84,    85,   116,   117,    44,    45,    46,    47,    48,
-      49,    50,    51,    52,    53,    89,    90
+       0,     3,     4,     5,     6,    12,    13,    18,    20,    35,
+      36,    76,    77,   106,   107,    38,    39,    40,    41,    42,
+      43,    44,    45,    46,    81,    82
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule whose
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint8 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      28,    43,    40,    54,    13,    13,    67,    57,     1,    60,
-      62,    63,    22,     2,    25,     2,    68,     7,    72,    73,
-      39,    33,    34,    35,    99,   100,   101,   102,     8,    82,
-      86,    58,    88,    74,    75,    37,    10,    59,    11,    38,
-      29,    30,    95,    31,    32,    12,     2,    70,    71,    39,
-       2,   105,   106,   107,    33,    34,    35,    76,    77,    23,
-      36,    33,    34,    35,    33,    61,    35,   113,    37,    97,
-      98,    17,    38,   103,   104,    37,    18,    20,    37,    38,
-      19,    21,    38,   115,   118,    23,   119,    78,    79,    80,
-      26,    65,    55,    56,    64,    69,   124,    87,    92,    66,
-      58,    81,   128,   108,    93,   110,   109,   111,   121,   112,
-       9,   114,   123,   127,   122,   126,    16,    83,   125,    91,
-     120,     0,    96,     0,    94
+      34,    37,    11,    47,     9,    50,    55,    56,    19,    51,
+      53,     7,    33,     1,     2,    52,    90,    91,    92,    93,
+      10,    26,    27,    28,    29,    70,    71,    72,    14,    74,
+      78,    15,    80,    21,    31,    16,    22,    23,    32,    24,
+      25,    33,     1,     2,    17,    96,    97,    98,     1,     2,
+      26,    27,    28,    29,    62,    63,    17,    30,    26,    27,
+      28,    29,    48,    31,    68,    69,   104,    32,    88,    89,
+      49,    31,    57,    94,    95,    32,    58,    64,    65,   105,
+      59,    60,   108,    73,   109,    26,    27,    54,    29,    61,
+     113,    66,    67,    79,    84,    51,   117,    85,    31,    99,
+     101,   100,    32,   102,   110,   103,   111,   112,   116,   115,
+       8,    75,   114,    83,    86,     0,     0,    87
 };
 
 static const yytype_int8 yycheck[] =
 {
-      25,    27,    27,    29,    11,    12,    17,    32,     3,    35,
-      37,    38,    19,    10,    21,    10,    27,    19,    14,    15,
-      27,    18,    19,    20,    72,    73,    74,    75,     0,    55,
-      56,    20,    58,    29,    30,    32,    19,    26,    20,    36,
-       4,     5,    68,     7,     8,    20,    10,    12,    13,    56,
-      10,    78,    79,    80,    18,    19,    20,    31,    32,    23,
-      24,    18,    19,    20,    18,    19,    20,    93,    32,    70,
-      71,    19,    36,    76,    77,    32,    21,    21,    32,    36,
-      22,    11,    36,   108,   110,    23,   112,    33,    34,    35,
-      19,    25,    20,    20,    19,    16,   121,     9,    21,    25,
-      20,    25,   127,    21,    26,    20,    25,    21,     6,    22,
-       4,    28,    21,    21,    25,    25,    12,    56,   122,    59,
-     114,    -1,    69,    -1,    67
+      20,    20,    10,    22,    19,    25,    31,    32,    16,    20,
+      29,     0,    20,     9,    10,    26,    64,    65,    66,    67,
+      20,    17,    18,    19,    20,    31,    32,    33,    19,    48,
+      49,    21,    51,    19,    30,    22,     3,     4,    34,     6,
+       7,    49,     9,    10,    23,    70,    71,    72,     9,    10,
+      17,    18,    19,    20,    11,    12,    23,    24,    17,    18,
+      19,    20,    20,    30,    29,    30,    85,    34,    62,    63,
+      20,    30,    19,    68,    69,    34,    25,    13,    14,    99,
+      25,    16,   101,    25,   103,    17,    18,    19,    20,    15,
+     110,    27,    28,     8,    21,    20,   116,    26,    30,    21,
+      20,    25,    34,    21,     5,    22,    25,    21,    21,    25,
+       4,    49,   111,    52,    60,    -1,    -1,    61
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    10,    38,    39,    40,    41,    19,     0,    40,
-      19,    20,    20,    41,    42,    43,    42,    19,    21,    22,
-      21,    11,    41,    23,    44,    41,    19,    45,    44,     4,
-       5,     7,     8,    18,    19,    20,    24,    32,    36,    41,
-      44,    46,    47,    51,    52,    53,    54,    55,    56,    57,
-      58,    59,    60,    61,    51,    20,    20,    44,    20,    26,
-      51,    19,    60,    60,    19,    25,    25,    17,    27,    16,
-      12,    13,    14,    15,    29,    30,    31,    32,    33,    34,
-      35,    25,    51,    47,    48,    49,    51,     9,    51,    62,
-      63,    52,    21,    26,    55,    51,    56,    57,    57,    58,
-      58,    58,    58,    59,    59,    60,    60,    60,    21,    25,
-      20,    21,    22,    51,    28,    44,    50,    51,    51,    51,
-      53,     6,    25,    21,    44,    50,    25,    21,    44
+       0,     9,    10,    36,    37,    38,    39,     0,    38,    19,
+      20,    39,    40,    41,    19,    21,    22,    23,    42,    39,
+      43,    19,     3,     4,     6,     7,    17,    18,    19,    20,
+      24,    30,    34,    39,    42,    44,    45,    49,    50,    51,
+      52,    53,    54,    55,    56,    57,    58,    49,    20,    20,
+      42,    20,    26,    49,    19,    57,    57,    19,    25,    25,
+      16,    15,    11,    12,    13,    14,    27,    28,    29,    30,
+      31,    32,    33,    25,    49,    45,    46,    47,    49,     8,
+      49,    59,    60,    50,    21,    26,    52,    53,    54,    54,
+      55,    55,    55,    55,    56,    56,    57,    57,    57,    21,
+      25,    20,    21,    22,    49,    42,    48,    49,    49,    49,
+       5,    25,    21,    42,    48,    25,    21,    42
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    37,    38,    39,    39,    40,    40,    41,    42,    42,
-      43,    43,    44,    45,    45,    46,    46,    46,    46,    46,
-      46,    46,    46,    47,    47,    48,    48,    49,    49,    50,
-      50,    51,    52,    52,    53,    53,    54,    54,    55,    55,
-      56,    56,    56,    57,    57,    57,    57,    57,    58,    58,
-      58,    59,    59,    59,    59,    60,    60,    60,    61,    61,
-      61,    61,    62,    62,    63,    63
+       0,    35,    36,    37,    37,    38,    39,    39,    40,    40,
+      41,    41,    42,    43,    43,    44,    44,    44,    44,    44,
+      44,    44,    44,    45,    45,    46,    46,    47,    47,    48,
+      48,    49,    50,    50,    51,    51,    52,    52,    53,    53,
+      53,    54,    54,    54,    54,    54,    55,    55,    55,    56,
+      56,    56,    56,    57,    57,    57,    58,    58,    58,    58,
+      58,    59,    59,    60,    60
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     6,     8,     1,     0,     1,
+       0,     2,     1,     1,     2,     6,     1,     1,     0,     1,
        2,     4,     3,     0,     2,     2,     2,     3,     7,     5,
        9,     7,     1,     2,     4,     0,     1,     1,     1,     0,
-       1,     1,     3,     1,     5,     1,     3,     1,     3,     1,
-       3,     3,     1,     3,     3,     3,     3,     1,     3,     3,
-       1,     3,     3,     3,     1,     2,     2,     1,     1,     1,
-       4,     3,     0,     1,     1,     3
+       1,     1,     3,     1,     3,     1,     3,     1,     3,     3,
+       1,     3,     3,     3,     3,     1,     3,     3,     1,     3,
+       3,     3,     1,     2,     2,     1,     1,     1,     1,     4,
+       3,     0,     1,     1,     3
 };
 
 
@@ -1314,159 +1306,153 @@ yydestruct (const char *yymsg,
   switch (yykind)
     {
     case YYSYMBOL_IDENT: /* IDENT  */
-#line 65 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { std::free(((*yyvaluep).str)); }
-#line 1320 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1312 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_program: /* program  */
-#line 70 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 71 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).program); }
-#line 1326 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1318 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_function_list: /* function_list  */
-#line 74 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 75 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).funcs); }
-#line 1332 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1324 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_function: /* function  */
-#line 69 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 70 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).func); }
-#line 1338 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1330 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_param_list_opt: /* param_list_opt  */
-#line 72 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 73 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).params); }
-#line 1344 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1336 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_param_list: /* param_list  */
-#line 72 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 73 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).params); }
-#line 1350 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1342 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_block: /* block  */
-#line 68 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 69 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).block); }
-#line 1356 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1348 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_statement_list: /* statement_list  */
-#line 73 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 74 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).stmts); }
-#line 1362 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1354 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_statement: /* statement  */
-#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 68 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).stmt); }
-#line 1368 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1360 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_var_decl: /* var_decl  */
-#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 68 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).stmt); }
-#line 1374 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1366 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_for_init_opt: /* for_init_opt  */
-#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 68 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).stmt); }
-#line 1380 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1372 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_for_init: /* for_init  */
-#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 68 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).stmt); }
-#line 1386 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1378 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_expression_opt: /* expression_opt  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1392 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1384 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_expression: /* expression  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1398 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1390 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_assignment: /* assignment  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1404 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
-        break;
-
-    case YYSYMBOL_ternary: /* ternary  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
-            { delete ((*yyvaluep).expr); }
-#line 1410 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1396 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_logical_or: /* logical_or  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1416 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1402 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_logical_and: /* logical_and  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1422 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1408 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_equality: /* equality  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1428 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1414 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_relational: /* relational  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1434 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1420 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_additive: /* additive  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1440 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1426 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_multiplicative: /* multiplicative  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1446 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1432 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_unary: /* unary  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1452 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1438 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_primary: /* primary  */
-#line 66 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 67 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).expr); }
-#line 1458 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1444 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_argument_list_opt: /* argument_list_opt  */
-#line 71 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 72 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).exprs); }
-#line 1464 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1450 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
     case YYSYMBOL_argument_list: /* argument_list  */
-#line 71 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 72 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { delete ((*yyvaluep).exprs); }
-#line 1470 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1456 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
         break;
 
       default:
@@ -1762,7 +1748,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: function_list  */
-#line 82 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 83 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           auto *program = new mc::Program();
           program->functions = std::move(*(yyvsp[0].funcs));
@@ -1770,29 +1756,29 @@ yyreduce:
           mc::g_parsed_program.reset(program);
           (yyval.program) = nullptr;
       }
-#line 1774 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1760 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 3: /* function_list: function  */
-#line 93 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 94 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.funcs) = new mc::FunctionList();
           (yyval.funcs)->push_back(std::unique_ptr<mc::FunctionDecl>((yyvsp[0].func)));
       }
-#line 1783 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1769 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 4: /* function_list: function_list function  */
-#line 98 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 99 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyvsp[-1].funcs)->push_back(std::unique_ptr<mc::FunctionDecl>((yyvsp[0].func)));
           (yyval.funcs) = (yyvsp[-1].funcs);
       }
-#line 1792 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1778 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 5: /* function: type IDENT '(' param_list_opt ')' block  */
-#line 106 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 107 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[-4].str));
           std::free((yyvsp[-4].str));
@@ -1801,447 +1787,434 @@ yyreduce:
           (yyval.func) = new mc::FunctionDecl(static_cast<mc::TypeKind>((yyvsp[-5].type_kind)), name, std::move(params), std::unique_ptr<mc::BlockStmt>((yyvsp[0].block)));
           MC_SET_LOC((yyval.func), (yylsp[-5]));
       }
-#line 1805 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1791 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 6: /* function: FN IDENT '(' param_list_opt ')' ARROW type block  */
-#line 115 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
-      {
-          std::string name((yyvsp[-6].str));
-          std::free((yyvsp[-6].str));
-          auto params = std::move(*(yyvsp[-4].params));
-          delete (yyvsp[-4].params);
-          (yyval.func) = new mc::FunctionDecl(static_cast<mc::TypeKind>((yyvsp[-1].type_kind)), name, std::move(params), std::unique_ptr<mc::BlockStmt>((yyvsp[0].block)));
-          MC_SET_LOC((yyval.func), (yylsp[-7]));
-      }
-#line 1818 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
-    break;
-
-  case 7: /* type: INT_KW  */
-#line 126 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 6: /* type: INT_KW  */
+#line 118 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
              { (yyval.type_kind) = static_cast<int>(mc::TypeKind::Int); }
-#line 1824 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1797 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+    break;
+
+  case 7: /* type: FLOAT_KW  */
+#line 119 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+               { (yyval.type_kind) = static_cast<int>(mc::TypeKind::Float); }
+#line 1803 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 8: /* param_list_opt: %empty  */
-#line 130 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 123 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.params) = new mc::ParamList(); }
-#line 1830 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1809 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 9: /* param_list_opt: param_list  */
-#line 131 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 124 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.params) = (yyvsp[0].params); }
-#line 1836 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1815 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 10: /* param_list: type IDENT  */
-#line 136 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 129 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.params) = new mc::ParamList();
           (yyval.params)->push_back({static_cast<mc::TypeKind>((yyvsp[-1].type_kind)), std::string((yyvsp[0].str))});
           std::free((yyvsp[0].str));
       }
-#line 1846 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1825 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 11: /* param_list: param_list ',' type IDENT  */
-#line 142 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 135 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyvsp[-3].params)->push_back({static_cast<mc::TypeKind>((yyvsp[-1].type_kind)), std::string((yyvsp[0].str))});
           std::free((yyvsp[0].str));
           (yyval.params) = (yyvsp[-3].params);
       }
-#line 1856 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1835 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 12: /* block: '{' statement_list '}'  */
-#line 151 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 144 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.block) = new mc::BlockStmt();
           MC_SET_LOC((yyval.block), (yylsp[-2]));
           (yyval.block)->statements = std::move(*(yyvsp[-1].stmts));
           delete (yyvsp[-1].stmts);
       }
-#line 1867 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1846 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 13: /* statement_list: %empty  */
-#line 160 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 153 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.stmts) = new mc::StmtList(); }
-#line 1873 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1852 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 14: /* statement_list: statement_list statement  */
-#line 162 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 155 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyvsp[-1].stmts)->push_back(std::unique_ptr<mc::Stmt>((yyvsp[0].stmt)));
           (yyval.stmts) = (yyvsp[-1].stmts);
       }
-#line 1882 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1861 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 15: /* statement: var_decl ';'  */
-#line 169 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 162 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                    { (yyval.stmt) = (yyvsp[-1].stmt); }
-#line 1888 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1867 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 16: /* statement: expression ';'  */
-#line 171 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 164 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::ExprStmt(std::unique_ptr<mc::Expr>((yyvsp[-1].expr)));
           MC_SET_LOC((yyval.stmt), (yylsp[-1]));
       }
-#line 1897 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1876 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 17: /* statement: RETURN expression ';'  */
-#line 176 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 169 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::ReturnStmt(std::unique_ptr<mc::Expr>((yyvsp[-1].expr)));
           MC_SET_LOC((yyval.stmt), (yylsp[-2]));
       }
-#line 1906 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1885 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 18: /* statement: IF '(' expression ')' block ELSE block  */
-#line 181 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 174 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::IfStmt(std::unique_ptr<mc::Expr>((yyvsp[-4].expr)), std::unique_ptr<mc::BlockStmt>((yyvsp[-2].block)), std::unique_ptr<mc::BlockStmt>((yyvsp[0].block)));
           MC_SET_LOC((yyval.stmt), (yylsp[-6]));
       }
-#line 1915 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1894 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 19: /* statement: IF '(' expression ')' block  */
-#line 186 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 179 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::IfStmt(std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::BlockStmt>((yyvsp[0].block)), nullptr);
           MC_SET_LOC((yyval.stmt), (yylsp[-4]));
       }
-#line 1924 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1903 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 20: /* statement: FOR '(' for_init_opt ';' expression_opt ';' expression_opt ')' block  */
-#line 191 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 184 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::ForStmt(std::unique_ptr<mc::Stmt>((yyvsp[-6].stmt)), std::unique_ptr<mc::Expr>((yyvsp[-4].expr)), std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::BlockStmt>((yyvsp[0].block)));
           MC_SET_LOC((yyval.stmt), (yylsp[-8]));
       }
-#line 1933 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1912 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 21: /* statement: DO block WHILE '(' expression ')' ';'  */
-#line 196 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 189 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.stmt) = new mc::DoWhileStmt(std::unique_ptr<mc::BlockStmt>((yyvsp[-5].block)), std::unique_ptr<mc::Expr>((yyvsp[-2].expr)));
           MC_SET_LOC((yyval.stmt), (yylsp[-6]));
       }
-#line 1942 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1921 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 22: /* statement: block  */
-#line 200 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 193 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { (yyval.stmt) = (yyvsp[0].block); }
-#line 1948 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1927 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 23: /* var_decl: type IDENT  */
-#line 205 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 198 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[0].str));
           std::free((yyvsp[0].str));
           (yyval.stmt) = new mc::VarDeclStmt(static_cast<mc::TypeKind>((yyvsp[-1].type_kind)), name, nullptr);
           MC_SET_LOC((yyval.stmt), (yylsp[-1]));
       }
-#line 1959 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1938 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 24: /* var_decl: type IDENT '=' expression  */
-#line 212 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 205 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[-2].str));
           std::free((yyvsp[-2].str));
           (yyval.stmt) = new mc::VarDeclStmt(static_cast<mc::TypeKind>((yyvsp[-3].type_kind)), name, std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.stmt), (yylsp[-3]));
       }
-#line 1970 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1949 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 25: /* for_init_opt: %empty  */
-#line 221 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 214 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.stmt) = nullptr; }
-#line 1976 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1955 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 26: /* for_init_opt: for_init  */
-#line 222 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 215 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1982 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1961 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 27: /* for_init: var_decl  */
-#line 226 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 219 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 1988 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1967 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 28: /* for_init: expression  */
-#line 227 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 220 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.stmt) = new mc::ExprStmt(std::unique_ptr<mc::Expr>((yyvsp[0].expr))); }
-#line 1994 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1973 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 29: /* expression_opt: %empty  */
-#line 231 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 224 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.expr) = nullptr; }
-#line 2000 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1979 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 30: /* expression_opt: expression  */
-#line 232 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 225 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.expr) = (yyvsp[0].expr); }
-#line 2006 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1985 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 31: /* expression: assignment  */
-#line 236 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 229 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.expr) = (yyvsp[0].expr); }
-#line 2012 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 1991 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
   case 32: /* assignment: IDENT '=' assignment  */
-#line 241 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 234 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[-2].str));
           std::free((yyvsp[-2].str));
           (yyval.expr) = new mc::AssignExpr(name, std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2023 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2002 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 33: /* assignment: ternary  */
-#line 247 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
-              { (yyval.expr) = (yyvsp[0].expr); }
-#line 2029 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
-    break;
-
-  case 34: /* ternary: logical_or '?' expression ':' ternary  */
-#line 252 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
-      {
-          (yyval.expr) = new mc::TernaryExpr(std::unique_ptr<mc::Expr>((yyvsp[-4].expr)), std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
-          MC_SET_LOC((yyval.expr), (yylsp[-4]));
-      }
-#line 2038 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
-    break;
-
-  case 35: /* ternary: logical_or  */
-#line 256 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 33: /* assignment: logical_or  */
+#line 240 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.expr) = (yyvsp[0].expr); }
-#line 2044 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2008 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 36: /* logical_or: logical_or OR logical_and  */
-#line 261 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 34: /* logical_or: logical_or OR logical_and  */
+#line 245 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Or, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2053 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2017 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 37: /* logical_or: logical_and  */
-#line 265 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 35: /* logical_or: logical_and  */
+#line 249 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.expr) = (yyvsp[0].expr); }
-#line 2059 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2023 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 38: /* logical_and: logical_and AND equality  */
-#line 270 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 36: /* logical_and: logical_and AND equality  */
+#line 254 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::And, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2068 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2032 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 39: /* logical_and: equality  */
-#line 274 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 37: /* logical_and: equality  */
+#line 258 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                { (yyval.expr) = (yyvsp[0].expr); }
-#line 2074 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2038 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 40: /* equality: equality EQ relational  */
-#line 279 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 38: /* equality: equality EQ relational  */
+#line 263 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Eq, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2083 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2047 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 41: /* equality: equality NE relational  */
-#line 284 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 39: /* equality: equality NE relational  */
+#line 268 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Ne, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2092 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2056 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 42: /* equality: relational  */
-#line 288 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 40: /* equality: relational  */
+#line 272 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                  { (yyval.expr) = (yyvsp[0].expr); }
-#line 2098 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2062 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 43: /* relational: relational '<' additive  */
-#line 293 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 41: /* relational: relational '<' additive  */
+#line 277 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Lt, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2107 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2071 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 44: /* relational: relational LE additive  */
-#line 298 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 42: /* relational: relational LE additive  */
+#line 282 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Le, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2116 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2080 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 45: /* relational: relational '>' additive  */
-#line 303 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 43: /* relational: relational '>' additive  */
+#line 287 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Gt, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2125 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2089 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 46: /* relational: relational GE additive  */
-#line 308 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 44: /* relational: relational GE additive  */
+#line 292 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Ge, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2134 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2098 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 47: /* relational: additive  */
-#line 312 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 45: /* relational: additive  */
+#line 296 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                { (yyval.expr) = (yyvsp[0].expr); }
-#line 2140 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2104 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 48: /* additive: additive '+' multiplicative  */
-#line 317 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 46: /* additive: additive '+' multiplicative  */
+#line 301 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Add, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2149 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2113 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 49: /* additive: additive '-' multiplicative  */
-#line 322 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 47: /* additive: additive '-' multiplicative  */
+#line 306 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Sub, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2158 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2122 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 50: /* additive: multiplicative  */
-#line 326 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 48: /* additive: multiplicative  */
+#line 310 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                      { (yyval.expr) = (yyvsp[0].expr); }
-#line 2164 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2128 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 51: /* multiplicative: multiplicative '*' unary  */
-#line 331 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 49: /* multiplicative: multiplicative '*' unary  */
+#line 315 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Mul, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2173 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2137 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 52: /* multiplicative: multiplicative '/' unary  */
-#line 336 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 50: /* multiplicative: multiplicative '/' unary  */
+#line 320 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Div, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2182 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2146 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 53: /* multiplicative: multiplicative '%' unary  */
-#line 341 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 51: /* multiplicative: multiplicative '%' unary  */
+#line 325 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::BinaryExpr(mc::BinaryOp::Mod, std::unique_ptr<mc::Expr>((yyvsp[-2].expr)), std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-2]));
       }
-#line 2191 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2155 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 54: /* multiplicative: unary  */
-#line 345 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 52: /* multiplicative: unary  */
+#line 329 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
             { (yyval.expr) = (yyvsp[0].expr); }
-#line 2197 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2161 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 55: /* unary: '-' unary  */
-#line 350 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 53: /* unary: '-' unary  */
+#line 334 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::UnaryExpr(mc::UnaryOp::Neg, std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-1]));
       }
-#line 2206 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2170 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 56: /* unary: '!' unary  */
-#line 355 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 54: /* unary: '!' unary  */
+#line 339 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::UnaryExpr(mc::UnaryOp::Not, std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           MC_SET_LOC((yyval.expr), (yylsp[-1]));
       }
-#line 2215 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2179 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 57: /* unary: primary  */
-#line 359 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 55: /* unary: primary  */
+#line 343 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
               { (yyval.expr) = (yyvsp[0].expr); }
-#line 2221 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2185 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 58: /* primary: INTEGER  */
-#line 364 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 56: /* primary: INTEGER  */
+#line 348 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.expr) = new mc::IntLiteral((yyvsp[0].int_value));
           MC_SET_LOC((yyval.expr), (yylsp[0]));
       }
-#line 2230 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2194 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 59: /* primary: IDENT  */
-#line 369 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 57: /* primary: FLOAT_LITERAL  */
+#line 353 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+      {
+          (yyval.expr) = new mc::FloatLiteral((yyvsp[0].float_value));
+          MC_SET_LOC((yyval.expr), (yylsp[0]));
+      }
+#line 2203 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+    break;
+
+  case 58: /* primary: IDENT  */
+#line 358 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[0].str));
           std::free((yyvsp[0].str));
           (yyval.expr) = new mc::VarExpr(name);
           MC_SET_LOC((yyval.expr), (yylsp[0]));
       }
-#line 2241 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2214 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 60: /* primary: IDENT '(' argument_list_opt ')'  */
-#line 376 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 59: /* primary: IDENT '(' argument_list_opt ')'  */
+#line 365 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           std::string name((yyvsp[-3].str));
           std::free((yyvsp[-3].str));
@@ -2250,47 +2223,47 @@ yyreduce:
           (yyval.expr) = new mc::CallExpr(name, std::move(args));
           MC_SET_LOC((yyval.expr), (yylsp[-3]));
       }
-#line 2254 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2227 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 61: /* primary: '(' expression ')'  */
-#line 384 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 60: /* primary: '(' expression ')'  */
+#line 373 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                          { (yyval.expr) = (yyvsp[-1].expr); }
-#line 2260 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2233 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 62: /* argument_list_opt: %empty  */
-#line 388 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 61: /* argument_list_opt: %empty  */
+#line 377 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                   { (yyval.exprs) = new mc::ExprList(); }
-#line 2266 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2239 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 63: /* argument_list_opt: argument_list  */
-#line 389 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 62: /* argument_list_opt: argument_list  */
+#line 378 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
                     { (yyval.exprs) = (yyvsp[0].exprs); }
-#line 2272 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2245 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 64: /* argument_list: expression  */
-#line 394 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 63: /* argument_list: expression  */
+#line 383 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyval.exprs) = new mc::ExprList();
           (yyval.exprs)->push_back(std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
       }
-#line 2281 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2254 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
-  case 65: /* argument_list: argument_list ',' expression  */
-#line 399 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+  case 64: /* argument_list: argument_list ',' expression  */
+#line 388 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
       {
           (yyvsp[-2].exprs)->push_back(std::unique_ptr<mc::Expr>((yyvsp[0].expr)));
           (yyval.exprs) = (yyvsp[-2].exprs);
       }
-#line 2290 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2263 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
     break;
 
 
-#line 2294 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
+#line 2267 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/build/parser.cpp"
 
       default: break;
     }
@@ -2519,7 +2492,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 405 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
+#line 394 "/mnt/c/Users/cergo9991/Downloads/mini-compiler-variant-5-main/mini-compiler-variant-5-main/src/parser.y"
 
 
 void yyerror(const char *message) {
